@@ -7,21 +7,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context="xyz.praveen.contactx.DecodeActivity">
 
-    <Button
-        android:id="@+id/contact_encode"
+    <TextView
+        android:id="@+id/contact_decoded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Encode Contact" />
+        android:layout_centerInParent="true"
+        android:text="sample info" />
 
-    <Button
-        android:id="@+id/contact_decode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/contact_encode"
-        android:layout_margin="8dp"
-        android:text="Decode Contact" />
+
+    <eu.livotov.zxscan.ScannerView
+        android:id="@+id/contact_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

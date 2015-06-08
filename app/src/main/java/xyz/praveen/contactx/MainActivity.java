@@ -1,25 +1,13 @@
 package xyz.praveen.contactx;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-
-import eu.livotov.zxscan.ScannerView;
+import android.view.View;
 
 
-public class MainActivity extends AppCompatActivity implements ScannerView.ScannerViewEventListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Context context = this;
 
 
@@ -27,44 +15,27 @@ public class MainActivity extends AppCompatActivity implements ScannerView.Scann
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageView test = (ImageView) findViewById(R.id.helloIm);
-        test.setImageBitmap(encodeToQrCode("Hello", 150, 150));
-        ScannerView scanner = (ScannerView) findViewById(R.id.scanner);
-        scanner.setScannerViewEventListener(this);
-        scanner.startScanner();
+
+        // Widgets setup
+        findViewById(R.id.contact_decode).setOnClickListener(this);
+        findViewById(R.id.contact_encode).setOnClickListener(this);
     }
 
-    public static Bitmap encodeToQrCode(String text, int width, int height) {
-        QRCodeWriter writer = new QRCodeWriter();
-        BitMatrix matrix = null;
-        try {
-            matrix = writer.encode(text, BarcodeFormat.QR_CODE, 150, 150);
-        } catch (WriterException ex) {
-            ex.printStackTrace();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.contact_decode:
+                Intent i = new Intent(this, DecodeActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.contact_encode:
+                Intent j = new Intent(this, EncodeActivity.class);
+                j.putExtra("pickContact", true);
+                startActivity(j);
+                break;
         }
-        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                bmp.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
-            }
-        }
-        return bmp;
     }
 
-    @Override
-    public void onScannerReady() {
 
-    }
-
-    @Override
-    public void onScannerFailure(int i) {
-
-    }
-
-    @Override
-    public boolean onCodeScanned(String s) {
-        //scanner.stopScanner();
-        Toast.makeText(this, "Data scanned: " + s, Toast.LENGTH_SHORT).show();
-        return true;
-    }
 }
