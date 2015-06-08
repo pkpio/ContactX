@@ -84,6 +84,8 @@ public class EncodeActivity extends AppCompatActivity {
                     }
                     mQRCode.setVisibility(View.VISIBLE);
                     mQRCode.setImageBitmap(encodeToQrCode(jsonContact, 150, 150));
+                } else {
+                    finish();
                 }
                 break;
         }
